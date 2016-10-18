@@ -16,6 +16,7 @@ export function login(req, res, next) {
     return req.logIn(user, (loginErr) => {
       if (loginErr) return res.status(401).json({ message: loginErr });
       return res.status(200).json({
+        role: user.role,
         message: 'You have been successfully logged in.'
       });
     });
@@ -37,10 +38,11 @@ export function logout(req, res) {
  */
 export function signUp(req, res, next) {
   const user = new User({
+    role: req.body.isContributor ? 'Contributor' : 'Member',
     email: req.body.email,
     password: req.body.password
   });
-
+  
   User.findOne({ email: req.body.email }, (findErr, existingUser) => {
     if (existingUser) {
       return res.status(409).json({ message: 'Account with this email address already exists!' });
@@ -51,6 +53,7 @@ export function signUp(req, res, next) {
       return req.logIn(user, (loginErr) => {
         if (loginErr) return res.status(401).json({ message: loginErr });
         return res.status(200).json({
+          role: user.role,
           message: 'You have been successfully logged in.'
         });
       });

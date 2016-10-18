@@ -58,6 +58,7 @@ export default function render(req, res) {
       authenticated,
       isWaiting: false,
       message: '',
+      role: authenticated ? req.user.role : '',
       isLogin: true
     }
   }, history);

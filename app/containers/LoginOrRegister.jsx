@@ -21,7 +21,7 @@ class LoginOrRegister extends Component {
 
   handleOnSubmit(event) {
     event.preventDefault();
-
+    
     const { manualLogin, signUp, user: { isLogin } } = this.props;
     const email = ReactDOM.findDOMNode(this.refs.email).value;
     const password = ReactDOM.findDOMNode(this.refs.password).value;
@@ -29,7 +29,8 @@ class LoginOrRegister extends Component {
     if (isLogin) {
       manualLogin({ email, password });
     } else {
-      signUp({ email, password });
+      const isContributor = ReactDOM.findDOMNode(this.refs.isContributor).checked;
+      signUp({ email, password, isContributor });
     }
   }
 
@@ -60,6 +61,18 @@ class LoginOrRegister extends Component {
     );
   }
 
+  renderCheckbox() {
+    const { user: { isLogin } } = this.props;
+    if(!isLogin) {
+      return (
+        <div>
+          <input className={cx('checkbox')} type="checkbox" ref="isContributor" /> 
+          <span>register as contributor</span> 
+         </div>
+      );
+    }
+  }
+
   render() {
     const { isWaiting, message, isLogin } = this.props.user;
 
@@ -81,6 +94,7 @@ class LoginOrRegister extends Component {
               ref="password"
               placeholder="password" />
               <div className={cx('hint')}>
+              { this.renderCheckbox() }
               <div>Hint</div>
               <div>email: example@ninja.com password: ninja</div>
               </div>

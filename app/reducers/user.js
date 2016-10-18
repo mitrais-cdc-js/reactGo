@@ -72,11 +72,30 @@ const authenticated = (
   }
 };
 
+const role = (
+  state = '',
+  action
+) => {
+  switch(action.type) {
+    case types.LOGIN_SUCCESS_USER:
+    case types.SIGNUP_SUCCESS_USER:
+    case types.LOGOUT_ERROR_USER:
+      return action.role;
+    case types.LOGIN_ERROR_USER:
+    case types.SIGNUP_ERROR_USER:
+    case types.LOGOUT_SUCCESS_USER:
+      return '';
+    default:
+      return state;
+  }
+}
+
 const userReducer = combineReducers({
   isLogin,
   isWaiting,
   authenticated,
-  message
+  message,
+  role
 });
 
 export default userReducer;

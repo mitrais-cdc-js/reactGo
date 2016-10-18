@@ -43,6 +43,7 @@ export function signUp(req, res, next) {
     }
 
     const user = User.build({
+      role: req.body.isContributor ? 'Contributor' : 'Member',
       email: req.body.email,
       password: req.body.password
     });
