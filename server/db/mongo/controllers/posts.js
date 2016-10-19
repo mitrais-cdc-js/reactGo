@@ -36,12 +36,12 @@ export function get(req, res) {
  * Secure endpoint, only contributor+
  */
 export function add(req, res) {
-  Post.create(req.body, (err) => {
+  Post.create(req.body, (err, post) => {
     if (err) {
       console.error(err);
       return res.status(500).json({status: 'error', message: 'Something went wrong when adding the post'});
     }
-    return res.status(200).json({status: 'ok'});
+    return res.status(200).json({status: 'ok', id: post._id});
   });
 }
 
