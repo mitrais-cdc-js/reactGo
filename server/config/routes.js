@@ -7,6 +7,7 @@ import { controllers, passport as passportConfig } from '../db';
 
 const usersController = controllers && controllers.users;
 const topicsController = controllers && controllers.topics;
+const postsController = controllers && controllers.posts;
 
 export default (app) => {
   // user routes
@@ -51,5 +52,16 @@ export default (app) => {
     app.delete('/topic/:id', topicsController.remove);
   } else {
     console.warn(unsupportedMessage('topics routes'));
+  }
+
+  // post routes
+  if (postsController) {
+    app.get('/post', postsController.all);
+    app.post('/post', postsController.add);
+    app.get('/post/:id', postsController.get);
+    app.put('/post/:id', postsController.update);
+    app.delete('/post/:id', postsController.remove);
+  } else {
+    console.warn(unsupportedMessage('post routes'));
   }
 };
