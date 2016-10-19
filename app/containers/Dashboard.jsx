@@ -1,36 +1,31 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import PostForm from 'components/PostForm';
+import { createPost } from 'actions/posts';
 
-/*
- * Note: This is kept as a container-level component,
- *  i.e. We should keep this as the container that does the data-fetching
- *  and dispatching of actions if you decide to have any sub-components.
- */
 class Dashboard extends Component {
-    constructor(props) {
-      super(props);
-    }
-
     render() {
-      const { user: { role } } = this.props;
+      const { user: { role }, createPost } = this.props;
       return (
         <div>
           <h2>Dashboard</h2>
           <p>Welcome to the Dasboard. will updated later with some serious form or menu here.</p>
           <p>by the way, your role is <strong>{ role }</strong></p>
+          <PostForm onPostSave={createPost} />
         </div>
       );
     }
 }
 
 Dashboard.propType = {
-  user: PropTypes.object
+  user: PropTypes.object,
+  createPost: PropTypes.func
 };
 
-function mapStateToProps({user}) {
+function mapStateToProps(state) {
   return {
-    user
+    user: state.user
   };
 }
 
-export default connect(mapStateToProps)(Dashboard);
+export default connect(mapStateToProps, { createPost })(Dashboard);
