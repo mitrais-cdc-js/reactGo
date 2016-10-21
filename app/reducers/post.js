@@ -22,6 +22,9 @@ const posts = (
   action
 ) => {
   switch (action.type) {
+    case types.GET_POSTS_SUCCESS:
+      if (action.data) return action.data;
+      return state;
     case types.CREATE_POST_SUCCESS:
       return [...state, post(undefined, action)];
     case types.CREATE_POST_FAILURE:

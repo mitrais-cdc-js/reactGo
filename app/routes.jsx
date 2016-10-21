@@ -1,10 +1,11 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
-import { fetchVoteData } from 'fetch-data';
+import { fetchVote, fetchPost } from 'fetch-data';
 import App from 'containers/App';
 import Vote from 'containers/Vote';
 import About from 'containers/About';
+import Timeline from 'containers/Timeline';
 import LoginOrRegister from 'containers/LoginOrRegister';
 import Dashboard from 'containers/Dashboard';
 
@@ -36,9 +37,10 @@ export default (store) => {
   };
   return (
     <Route path="/" component={App}>
-      <IndexRoute component={Vote} fetchData={fetchVoteData} />
+      <IndexRoute component={Timeline} fetchData={fetchPost} />
       <Route path="login" component={LoginOrRegister} onEnter={redirectAuth} />
       <Route path="dashboard" component={Dashboard} onEnter={requireAuth} />
+      <Route path="idea" component={Vote} fetchData={fetchVote} />
       <Route path="about" component={About} />
     </Route>
   );
